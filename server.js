@@ -60,12 +60,14 @@ app.get('/weather', (request, response) => {
   try {
     const weatherDateData = require('./data/darksky.json');//اذا كتبت المكان غلط بطلع ايرور "MODULE_NOT_FOUND"
     let DateWeatherArr = [];
+    
+    
     for (let i = 0; i < weatherDateData.data.length; i++) {
       let dateAndWeatherObj$$ = new weather(weatherDateData, i);
       DateWeatherArr.push(dateAndWeatherObj$$);
     }
+    console.log(DateWeatherArr);
     response.send(DateWeatherArr);//{} اذا كتبت اسم متغير مش موجود بطلع المتصفح
-
   } catch (error) {
     errorHandler(error, request, response);
   }
@@ -73,6 +75,8 @@ app.get('/weather', (request, response) => {
 
 function weather(fileDarkSky, indexx) {
   this.time = new Date(fileDarkSky.data[indexx].valid_date).toDateString();
+  //console.log(new Date("2020-04-05").toDateString());
+  //Sun Apr 05 2020 استعملتها عشان احول التاريخ هيك
   this.forecast = fileDarkSky.data[indexx].weather.description;
  
 }
